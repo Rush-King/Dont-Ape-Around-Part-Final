@@ -20,6 +20,7 @@ var jump_sfx;
 
 var satisfied_gorrillas="not_satisfied";
 var collected_banana=0;
+var difficulty="none";
 var gameState="alive";
 var seconds=0;
 
@@ -91,7 +92,7 @@ function setup() {
 
     background_bg = createSprite(0,369,1550,750);
     background_bg.addImage(background_image);             
-    background_bg.velocityX= -25;
+    background_bg.velocityX= -26;
 
     restart_but = createSprite(765,370);
     restart_but.addImage(restart_image);
@@ -157,6 +158,30 @@ function draw() {
 
         trophy.visible=false;
         lose.visible=false;
+
+    if(difficulty=="none") {
+
+        background_bg.velocityX=-26;
+    
+    }
+    
+    if(difficulty=="one") {
+            
+        background_bg.velocityX=-31;
+    
+    }
+    
+    if(difficulty=="two") {
+            
+        background_bg.velocityX=-36;
+    
+    }
+    
+    if(difficulty=="three") {
+            
+        background_bg.velocityX=-41;
+    
+    }
     
     if(background_bg.x<0) {
 
@@ -164,7 +189,7 @@ function draw() {
 
     }
 
-    if(keyDown("space") && player.y>=500) {
+    if(keyDown("space") && player.y>=550) {
 
         player.velocityY=-20;
         jump_sfx.play();
@@ -209,6 +234,12 @@ function draw() {
 
         background_bg.velocityX=0;
 
+        super_natural_banana_sfx.stop();
+        forest_ambience.stop();
+        obstacles_sfx.stop();
+        gorrilla_sfx.stop();
+        jump_sfx.stop();
+
         if(mousePressedOver(restart_but)) {
 
         restart();
@@ -249,7 +280,12 @@ function draw() {
         obstacles_Grp.destroyEach();
         super_natural_banana_Grp.destroyEach();
 
+        super_natural_banana_sfx.stop();
         forest_ambience.stop();
+        obstacles_sfx.stop();
+        gorrilla_sfx.stop();
+        jump_sfx.stop();
+    
         
         restart_but.visible=true ;
         lose.visible=true;
@@ -266,32 +302,34 @@ function draw() {
 
     if(collected_banana==0) {
 
-        gorrilla_3.visible=true
-        gorrilla_2.visible=true
-        gorrilla_1.visible=true
+        gorrilla_3.visible=true;
+        gorrilla_2.visible=true;
+        gorrilla_1.visible=true;
 
     }
 
     if(collected_banana==5) {
 
-        gorrilla_3.visible=false
+        gorrilla_3.visible=false;
+        difficulty="one";
 
     }
 
     if(collected_banana==15) {
 
-        gorrilla_2.visible=false
+        gorrilla_2.visible=false;
+        difficulty="two";
 
     }
 
     if(collected_banana==30) {
 
-        gorrilla_1.visible=false
+        gorrilla_1.visible=false;
+        difficulty="three";
         super_natural_banana_Grp.destroyEach();
               
         date=new Date().getSeconds();
         seconds=date;
-        console.log(seconds)
 
             
         if(seconds==35) {
@@ -371,62 +409,240 @@ function draw() {
 
 function spawnObstacles() {
 
-    if(frameCount%50 === 0) {
+    if(difficulty=="none") {
 
-        var obstacles = createSprite(1500,610,50,35);
-        obstacles.velocityX=-26;
-        obstacles.scale=1;
+        if(frameCount%50 === 0) {
 
-    var rand = Math.round(random(1,3));
-    switch (rand) {
+            var obstacles = createSprite(1500,610,50,35);
+            obstacles.scale=1;
+            obstacles.velocityX=-26;
 
-        case 1: obstacles.addImage(obstacle_1);
-                break;
-        case 2: obstacles.addImage(obstacle_2);
-                break;
-        case 3: obstacles.addImage(obstacle_3);
-                break;
-        default: break;
+            var rand = Math.round(random(1,3));
+            switch (rand) {
+
+            case 1: obstacles.addImage(obstacle_1);
+                    break;
+            case 2: obstacles.addImage(obstacle_2);
+                    break;
+            case 3: obstacles.addImage(obstacle_3);
+                    break;
+            default: break;
+
+        }
+
+        obstacles_Grp.add(obstacles);
+        obstacles.lifetime=138;
+        obstacles_sfx.play();
+
+        }
 
     }
 
-    obstacles_Grp.add(obstacles);
-    obstacles.lifetime=138;
-    obstacles_sfx.play();
+    if(difficulty=="one") {
+        
+        if(frameCount%45 === 0) {
 
-}
+            var obstacles = createSprite(1500,610,50,35);
+            obstacles.scale=1;
+            obstacles.velocityX=-31;
+
+            var rand = Math.round(random(1,3));
+            switch (rand) {
+
+            case 1: obstacles.addImage(obstacle_1);
+                    break;
+            case 2: obstacles.addImage(obstacle_2);
+                    break;
+            case 3: obstacles.addImage(obstacle_3);
+                    break;
+            default: break;
+
+        }
+
+        obstacles_Grp.add(obstacles);
+        obstacles.lifetime=138;
+        obstacles_sfx.play();
+
+        }
+
+    }
+
+    if(difficulty=="two") {
+        
+        if(frameCount%40 === 0) {
+
+            var obstacles = createSprite(1500,610,50,35);
+            obstacles.scale=1;
+            obstacles.velocityX=-36;
+
+            var rand = Math.round(random(1,3));
+            switch (rand) {
+
+            case 1: obstacles.addImage(obstacle_1);
+                    break;
+            case 2: obstacles.addImage(obstacle_2);
+                    break;
+            case 3: obstacles.addImage(obstacle_3);
+                    break;
+            default: break;
+
+        }
+
+        obstacles_Grp.add(obstacles);
+        obstacles.lifetime=138;
+        obstacles_sfx.play();
+
+        }
+
+    }
+
+    if(difficulty=="three") {
+        
+        if(frameCount%35 === 0) {
+
+            var obstacles = createSprite(1500,610,50,35);
+            obstacles.scale=1;
+            obstacles.velocityX=-41;
+
+            var rand = Math.round(random(1,3));
+            switch (rand) {
+
+            case 1: obstacles.addImage(obstacle_1);
+                    break;
+            case 2: obstacles.addImage(obstacle_2);
+                    break;
+            case 3: obstacles.addImage(obstacle_3);
+                    break;
+            default: break;
+
+        }
+
+        obstacles_Grp.add(obstacles);
+        obstacles.lifetime=138;
+        obstacles_sfx.play();
+
+        }
+
+    }
 
 }
 
 function spawnSuperNaturalBananas() {
 
-    if(frameCount%100 === 0) {
+    if(difficulty=="none") {
 
-        super_natural_banana = createSprite(1500,400,40,40);
-        super_natural_banana.addImage(super_natural_banana_image);
+        if(frameCount%100 === 0) {
 
-        super_natural_banana.scale=0.3;
-        super_natural_banana.velocityX=-26;
+            super_natural_banana = createSprite(1500,400,40,40);
+            super_natural_banana.addImage(super_natural_banana_image);
+            
+            super_natural_banana.scale=0.3;
+            super_natural_banana.velocityX=-26;
+    
+            super_natural_banana_Grp.add(super_natural_banana);
+            super_natural_banana.lifetime=138;
+    
+        if(collected_banana<30 && collected_banana>0) {
+    
+            super_natural_banana_sfx.play();
+    
+        }
+    
+        else {
+    
+        }
 
-        super_natural_banana_Grp.add(super_natural_banana);
-        super_natural_banana.lifetime=138;
-
-    if(collected_banana<30) {
-
-        super_natural_banana_sfx.play();
+        }
 
     }
 
-    else {
+    if(difficulty=="one") {
+
+        if(frameCount%90 === 0) {
+
+            super_natural_banana = createSprite(1500,400,40,40);
+            super_natural_banana.addImage(super_natural_banana_image);
+            
+            super_natural_banana.scale=0.3;
+            super_natural_banana.velocityX=-31;
+    
+            super_natural_banana_Grp.add(super_natural_banana);
+            super_natural_banana.lifetime=138;
+    
+        if(collected_banana<30 && collected_banana>0) {
+    
+            super_natural_banana_sfx.play();
+    
+        }
+    
+        else {
+    
+        }
+        
+        }
 
     }
-}
+
+    if(difficulty=="two") {
+        
+        if(frameCount%80 === 0) {
+
+            super_natural_banana = createSprite(1500,400,40,40);
+            super_natural_banana.addImage(super_natural_banana_image);
+            
+            super_natural_banana.scale=0.3;
+            super_natural_banana.velocityX=-36;
+    
+            super_natural_banana_Grp.add(super_natural_banana);
+            super_natural_banana.lifetime=138;
+    
+        if(collected_banana<30 && collected_banana>0) {
+    
+            super_natural_banana_sfx.play();
+    
+        }
+    
+        else {
+    
+        }
+        
+        }
+
+    }
+
+    if(difficulty=="three") {
+   
+        if(frameCount%70 === 0) {
+
+            super_natural_banana = createSprite(1500,400,40,40);
+            super_natural_banana.addImage(super_natural_banana_image);
+            
+            super_natural_banana.scale=0.3;
+            super_natural_banana.velocityX=-41;
+    
+            super_natural_banana_Grp.add(super_natural_banana);
+            super_natural_banana.lifetime=138;
+    
+        if(collected_banana<30 && collected_banana>0) {
+    
+            super_natural_banana_sfx.play();
+    
+        }
+    
+        else {
+    
+        }
+        
+        }
+
+    }
 
 }
 
 function restart() {
 
     gameState="alive";
+    difficulty="none";
     collected_banana=0;
     satisfied_gorrillas="not_satisfied";
 
@@ -434,7 +650,7 @@ function restart() {
     restart_but.visible=false;
     trophy.visible=false;
     lose.visible=false;
-    background_bg.velocityX=-25;
+    background_bg.velocityX=-26;
 
     player.changeAnimation("running",player_running);
     gorrilla_1.changeAnimation("running",gorrilla_running);
